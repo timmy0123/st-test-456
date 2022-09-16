@@ -5,14 +5,12 @@ st.set_page_config(layout="wide")
 
 # Customize the sidebar
 markdown = """
-Web App URL: <https://template.streamlitapp.com>
-GitHub Repository: <https://github.com/giswqs/streamlit-multipage-template>
+Git: <https://github.com/timmy0123/st-test-456/tree/opendata-demo>\n
+氣象資料: <https://opendata.cwb.gov.tw/dataset/observation/O-A0001-001>
 """
 
 st.sidebar.title("About")
 st.sidebar.info(markdown)
-logo = "https://i.imgur.com/UbOXYAU.png"
-st.sidebar.image(logo)
 
 # Customize page title
 st.title("氣象資料展示")

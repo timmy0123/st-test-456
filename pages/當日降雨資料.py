@@ -12,16 +12,19 @@ import numpy as np
 st.set_page_config(layout="wide")
 
 markdown = """
-Web App URL: <https://template.streamlitapp.com>
-GitHub Repository: <https://github.com/giswqs/streamlit-multipage-template>
+Git: <https://github.com/timmy0123/st-test-456/tree/opendata-demo>\n
+氣象資料: <https://opendata.cwb.gov.tw/dataset/observation/O-A0001-001>
 """
 
 st.sidebar.title("About")
 st.sidebar.info(markdown)
-logo = "https://i.imgur.com/UbOXYAU.png"
-st.sidebar.image(logo)
 
 st.title("降雨資料")
+
+contnet = """
+        雨量資料為24小時的累積降雨量，將其以熱點圖的形式繪製在地圖上，不同顏色代表不同程度的降雨。
+        """
+st.markdown(contnet)
 
 url = 'https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0002-001?Authorization=CWB-2D9A3820-D547-4A45-AEF9-1636F2744FF4'
 data = requests.get(url)  
@@ -41,8 +44,11 @@ citys = list(set(citys))
 col1, col2 = st.columns([4, 1])
 
 with col2:
-
     select_city = st.selectbox("Select a City:", citys)
+    show = data[data['City'] == select_city]
+    show = show.rename({'One_day_Rain': '24Hr_Rain'}, axis=1)
+    st.dataframe(show)
+
 
 
 with col1:
@@ -51,13 +57,10 @@ with col1:
     heat_data = raindata[['lat','lon','One_day_Rain']].values
     heat_data = heat_data.astype(float)
     heat_data = np.array(heat_data)
-    maxrain = 300
-    heat_data[:,2] = heat_data[:,2] / maxrain
     lat = np.mean(heat_data[:,0])
     lon = np.mean(heat_data[:,1])
-    heat_data[np.where(heat_data[:,2] > 1)[0],2] = 1
     steps=20
-    colormap = branca.colormap.linear.YlOrRd_09.scale(0, 1).to_step(steps)
+    colormap = branca.colormap.linear.YlOrRd_09.scale(0, 300).to_step(steps)
     gradient_map=defaultdict(dict)
     for i in range(steps):
         gradient_map[1/steps*i] = colormap.rgb_hex_str(1/steps*i)

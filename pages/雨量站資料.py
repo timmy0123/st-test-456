@@ -1,6 +1,4 @@
 import streamlit as st
-from collections import defaultdict
-import branca.colormap
 import leafmap.foliumap as leafmap
 from folium.plugins import HeatMap
 import requests   
@@ -13,14 +11,12 @@ import statistics
 st.set_page_config(layout="wide")
 
 markdown = """
-Web App URL: <https://template.streamlitapp.com>
-GitHub Repository: <https://github.com/giswqs/streamlit-multipage-template>
+Git: <https://github.com/timmy0123/st-test-456/tree/opendata-demo>\n
+氣象資料: <https://opendata.cwb.gov.tw/dataset/observation/O-A0001-001>
 """
 
 st.sidebar.title("About")
 st.sidebar.info(markdown)
-logo = "https://i.imgur.com/UbOXYAU.png"
-st.sidebar.image(logo)
 
 st.title("雨量站資訊")
 
@@ -42,7 +38,6 @@ data = pd.DataFrame(dic_data)
 citys = data['City'].to_list()
 citys = list(set(citys))
 cc1,cc2,cc3 = st.columns([2,2,1])
-col1, col2 = st.columns([4, 1])
 with cc1:
     contnet = """
         從最右邊來選擇縣市，來查看各縣市的雨量站資料，並可從下方地圖來了解其確切位置。\n
@@ -56,16 +51,16 @@ with cc3:
 with cc2:
     st.write(data[data['City'] == select_city],width='100%')
 
-with col1:
-    raindata = data[data['City'] == select_city]
-    lats = raindata['lat'].values
-    lats = lats.astype(float)
-    lons = raindata['lon'].values
-    lons = lons.astype(float)
-    geodata = geopandas.GeoDataFrame(raindata, crs='epsg:4326', geometry=geopandas.points_from_xy(raindata.lon, raindata.lat))
-    lat = statistics.mean(lats)
-    lon = statistics.mean(lons)
-    m = leafmap.Map(center=(lat, lon),zoom=9,locate_control=True, latlon_control=True, draw_export=True, minimap_control=True)
-    m.add_gdf(geodata)
-    m.add_basemap("OpenStreetMap")
-    m.to_streamlit(height=700)
+
+raindata = data[data['City'] == select_city]
+lats = raindata['lat'].values
+lats = lats.astype(float)
+lons = raindata['lon'].values
+lons = lons.astype(float)
+geodata = geopandas.GeoDataFrame(raindata, crs='epsg:4326', geometry=geopandas.points_from_xy(raindata.lon, raindata.lat))
+lat = statistics.mean(lats)
+lon = statistics.mean(lons)
+m = leafmap.Map(center=(lat, lon),zoom=9,locate_control=True, latlon_control=True, draw_export=True, minimap_control=True)
+m.add_gdf(geodata)
+m.add_basemap("OpenStreetMap")
+m.to_streamlit(height=700)
