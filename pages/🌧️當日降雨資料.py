@@ -59,14 +59,17 @@ with col1:
     heat_data = np.array(heat_data)
     lat = np.mean(heat_data[:,0])
     lon = np.mean(heat_data[:,1])
-    steps=20
-    colormap = branca.colormap.linear.YlOrRd_09.scale(0, 300).to_step(steps)
+    heat_data[:,2] = heat_data[:,2] / 300
+    heat_data[np.where(heat_data[:,2] < 0.0001),2] = 0.1
+    
+    steps=5
+    colormap = branca.colormap.linear.BuPu_03.scale(0, 300).to_step(steps)
     gradient_map=defaultdict(dict)
     for i in range(steps):
-        gradient_map[1/steps*i] = colormap.rgb_hex_str(1/steps*i)
-    
-    m = leafmap.Map(center=(lat, lon),zoom=9,locate_control=True, latlon_control=True, draw_export=True, minimap_control=True)
-    HeatMap(heat_data.tolist(),name='降雨',gradient = gradient_map,radius=15).add_to(m)
+        gradient_map[1/steps*i] = colormap.rgb_hex_str(300/steps*i)
+    print(heat_data)
+    m = leafmap.Map(center=(lat, lon),zoom=10,locate_control=True, latlon_control=True, draw_export=True, minimap_control=True)
+    HeatMap(heat_data,max_zoom=9,name='降雨',min_opacity=0.01,max_opacity=0.99,gradient = gradient_map,radius=25).add_to(m)
     colormap.add_to(m)
     m.add_basemap("OpenStreetMap")
     m.to_streamlit(height=700)
