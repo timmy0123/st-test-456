@@ -67,7 +67,7 @@ with col1:
     gradient_map=defaultdict(dict)
     for i in range(steps):
         gradient_map[1/steps*i] = colormap.rgb_hex_str(300/steps*i)
-    print(heat_data)
+    
     m = leafmap.Map(center=(lat, lon),zoom=10,locate_control=True, latlon_control=True, draw_export=True, minimap_control=True)
     HeatMap(heat_data,max_zoom=9,name='降雨',min_opacity=0.01,max_opacity=0.99,gradient = gradient_map,radius=25).add_to(m)
     colormap.add_to(m)
