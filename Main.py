@@ -26,7 +26,11 @@ st.header("介紹")
 markdown = """
 1. 這是用來展示氣象站資料的網頁
 2. 氣象資料是透過api從氣象局網站取得 (氣象資料: https://opendata.cwb.gov.tw/dataset/observation/O-A0001-001)
-3. 資料將會展示於下方地圖上
+3. 展示的資料有：
+   a)降雨資料
+   b)雨量站資料
+   c)當月有感地震資料
+   d)氣溫資料
 """
 
 st.markdown(markdown)
