@@ -11,7 +11,7 @@ import statistics
 st.set_page_config(layout="wide")
 
 markdown = """
-Git: <https://github.com/timmy0123/st-test-456/tree/opendata-demo>\n
+Git: <https://github.com/timmy0123/st-test-456>\n
 氣象資料: <https://opendata.cwb.gov.tw/dataset/observation/O-A0001-001>
 """
 
