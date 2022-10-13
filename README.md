@@ -8,19 +8,19 @@ Web App URL: <https://opendatademo.herokuapp.com/>
 
 ## Instructions
 
-這是用來展示氣象站資料的網頁
+This is a simple website which is builded by streamlit and deployed on Heroku.
 
-氣象資料是透過api從氣象局網站取得 (氣象資料: https://opendata.cwb.gov.tw/dataset/observation/O-A0001-001)
+This website is used to demo meteorological informations on leaflet. The data is from [Central Weather Bureau] (https://opendata.cwb.gov.tw/dataset/observation/O-A0001-001)
 
-展示的資料有：
+There are several kinds of meteorological information：
 
-a)降雨資料
+a)Rainfall information
 
-b)雨量站資料
+b)Rain gauge information
 
-c)當月有感地震資料
+c)Earthquake
 
-d)氣溫資料
+d)Temperature
 
 ## Demo
 
